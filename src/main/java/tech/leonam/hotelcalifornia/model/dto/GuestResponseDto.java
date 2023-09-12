@@ -1,9 +1,15 @@
 package tech.leonam.hotelcalifornia.model.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
-public class GuestDto {
+import java.util.UUID;
+
+public class GuestResponseDto {
+    @NotBlank
+    private UUID uuid;
     @NotBlank
     @Size(min = 3, max = 255, message = "Name: The minimum number of characters is 3 and the maximum is 255")
     private String name;
@@ -47,5 +53,13 @@ public class GuestDto {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 }

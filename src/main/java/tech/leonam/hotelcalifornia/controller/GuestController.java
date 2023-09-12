@@ -1,13 +1,15 @@
 package tech.leonam.hotelcalifornia.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.leonam.hotelcalifornia.model.dto.GuestDto;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.leonam.hotelcalifornia.model.dto.GuestRegisterDto;
+import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
 import tech.leonam.hotelcalifornia.service.GuestService;
 import tech.leonam.hotelcalifornia.util.Copy;
 import tech.leonam.hotelcalifornia.util.CpfFormat;
+import tech.leonam.hotelcalifornia.util.exception.NotFoundException;
 
 import java.util.UUID;
 
@@ -22,27 +24,24 @@ public class GuestController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> registerGuest(@RequestBody @Valid GuestDto guest){
-        service.register(new Copy().copyWithoutUUID(guest));
-        ResponseEntity.status(HttpStatus.OK);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<GuestResponseDto> registerGuest(@RequestBody @Valid GuestRegisterDto guest){
+        var entity = new Copy().RegisterDtoToEntity(guest);
+        var entitySave = service.register(entity);
+        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySave.getUuid()).toUri();
+        return ResponseEntity.created(uri).body(entitySave);
     }
     @PutMapping("{uuid}")
-    public ResponseEntity<Object> modifyGuest(@PathVariable UUID uuid,@RequestBody @Valid GuestDto guest){
+    public ResponseEntity<Object> modifyGuest(@PathVariable UUID uuid,@RequestBody @Valid GuestRegisterDto guest) {
         if (!service.existsById(uuid)){
             return ResponseEntity.badRequest().build();
         }
 
-        service.modify(new Copy().copyWithUUID(guest));
+       // service.modify(new Copy().copyWithUUID(guest));
         return ResponseEntity.accepted().build();
     }
     @DeleteMapping("{uuid}")
-    public ResponseEntity<Object> deleteGuest(@PathVariable UUID uuid){
-        if(!service.existsById(uuid)){
-            return ResponseEntity.badRequest().build();
-        }
+    public void deleteGuest(@PathVariable UUID uuid) throws NotFoundException {
         service.delete(uuid);
-        return ResponseEntity.ok().build();
     }
     @GetMapping("/all")
     public ResponseEntity<Object> getAllGuests(){

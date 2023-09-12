@@ -2,8 +2,11 @@ package tech.leonam.hotelcalifornia.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
 import tech.leonam.hotelcalifornia.model.entity.GuestEntity;
 import tech.leonam.hotelcalifornia.repository.GuestRespository;
+import tech.leonam.hotelcalifornia.util.Copy;
+import tech.leonam.hotelcalifornia.util.exception.NotFoundException;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,33 +20,44 @@ public class GuestService {
     }
 
     @Transactional
-    public void register(GuestEntity guest) {
-        respository.save(guest);
+    public GuestResponseDto register(GuestEntity guest) {
+        var response = respository.save(guest);
+        return new Copy().EntityToDtoResponse(response);
     }
 
     @Transactional
-    public void delete(UUID uuid) {
+    public void delete(UUID uuid) throws NotFoundException {
+        if (!existsById(uuid)) {
+            throw new NotFoundException("This id was not found.");
+        }
         respository.deleteById(uuid);
     }
 
     @Transactional
-    public void modify(GuestEntity guest) {
+    public void modify(GuestEntity guest) throws Exception {
+        if (!existsById(guest.getId())) {
+            throw new Exception();
+        }
         //TODO
     }
-    public boolean existsById(UUID uuid){
+
+    public boolean existsById(UUID uuid) {
         return respository.existsById(uuid);
     }
-    public List<GuestEntity> getAll(){
+
+    public List<GuestEntity> getAll() {
         return respository.findAll();
     }
-    public List<GuestEntity> getByName(String name){
+
+    public List<GuestEntity> getByName(String name) {
         return respository.findByName(name);
     }
 
     public List<GuestEntity> getByDocument(String cpf) {
         return respository.findByDocument(cpf);
     }
-    public List<GuestEntity> getByCellPhone(String cellPhone){
+
+    public List<GuestEntity> getByCellPhone(String cellPhone) {
         return respository.findByCellPhone(cellPhone);
     }
 }
