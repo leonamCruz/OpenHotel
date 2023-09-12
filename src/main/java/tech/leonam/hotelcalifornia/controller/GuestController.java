@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.leonam.hotelcalifornia.model.dto.GuestRegisterDto;
 import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
+import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
 import tech.leonam.hotelcalifornia.service.GuestService;
 import tech.leonam.hotelcalifornia.util.Copy;
 import tech.leonam.hotelcalifornia.util.CpfFormat;
@@ -26,18 +27,16 @@ public class GuestController {
     @PostMapping
     public ResponseEntity<GuestResponseDto> registerGuest(@RequestBody @Valid GuestRegisterDto guest){
         var entity = new Copy().RegisterDtoToEntity(guest);
-        var entitySave = service.register(entity);
-        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySave.getUuid()).toUri();
-        return ResponseEntity.created(uri).body(entitySave);
+        var entitySaved = service.register(entity);
+        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getUuid()).toUri();
+        return ResponseEntity.created(uri).body(entitySaved);
     }
-    @PutMapping("{uuid}")
-    public ResponseEntity<Object> modifyGuest(@PathVariable UUID uuid,@RequestBody @Valid GuestRegisterDto guest) {
-        if (!service.existsById(uuid)){
-            return ResponseEntity.badRequest().build();
-        }
-
-       // service.modify(new Copy().copyWithUUID(guest));
-        return ResponseEntity.accepted().build();
+    @PutMapping
+    public ResponseEntity<Object> modifyGuest(@RequestBody @Valid GuestUpdateDto guest) throws NotFoundException {
+        var entity = new Copy().UpdateDtoToEntity(guest);
+        var entityUpdated = service.modify(entity);
+        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entityUpdated.getUuid()).toUri();
+        return ResponseEntity.created(uri).body(entityUpdated);
     }
     @DeleteMapping("{uuid}")
     public void deleteGuest(@PathVariable UUID uuid) throws NotFoundException {

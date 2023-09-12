@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.br.CPF;
 import java.util.UUID;
 
 public class GuestResponseDto {
-    @NotBlank
     private UUID uuid;
     @NotBlank
     @Size(min = 3, max = 255, message = "Name: The minimum number of characters is 3 and the maximum is 255")

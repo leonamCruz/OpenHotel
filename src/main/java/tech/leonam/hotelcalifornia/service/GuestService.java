@@ -34,15 +34,13 @@ public class GuestService {
     }
 
     @Transactional
-    public void modify(GuestEntity guest) throws Exception {
+    public GuestResponseDto modify(GuestEntity guest) throws NotFoundException {
         if (!existsById(guest.getId())) {
-            throw new Exception();
+            throw new NotFoundException("This id was not found.");
         }
-        //TODO
-    }
 
-    public boolean existsById(UUID uuid) {
-        return respository.existsById(uuid);
+        var entitySaved = respository.save(guest);
+        return new Copy().EntityToDtoResponse(entitySaved);
     }
 
     public List<GuestEntity> getAll() {
@@ -59,5 +57,9 @@ public class GuestService {
 
     public List<GuestEntity> getByCellPhone(String cellPhone) {
         return respository.findByCellPhone(cellPhone);
+    }
+
+    private boolean existsById(UUID uuid) {
+        return respository.existsById(uuid);
     }
 }
