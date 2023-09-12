@@ -9,7 +9,8 @@ public class CheckInEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     public UUID id;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "guest_id")
     public GuestEntity guest;
     @Column
     public String momentEntry;
