@@ -6,7 +6,7 @@ import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
 import tech.leonam.hotelcalifornia.model.entity.GuestEntity;
 
 public class Copy {
-    public GuestEntity RegisterDtoToEntity(GuestRegisterDto dto){
+    public static GuestEntity RegisterDtoToEntity(GuestRegisterDto dto){
         var entity = new GuestEntity();
         entity.setName(dto.getName());
         entity.setCpf(dto.getCpf());
@@ -15,7 +15,7 @@ public class Copy {
         return entity;
     }
 
-    public GuestResponseDto EntityToDtoResponse(GuestEntity guest) {
+    public static GuestResponseDto EntityToDtoResponse(GuestEntity guest) {
         var response = new GuestResponseDto();
         response.setUuid(guest.getId());
         response.setName(guest.getName());
@@ -25,7 +25,7 @@ public class Copy {
         return response;
     }
 
-    public GuestEntity UpdateDtoToEntity(GuestUpdateDto guest) {
+    public static GuestEntity UpdateDtoToEntity(GuestUpdateDto guest) {
         var entity = new GuestEntity();
         entity.setId(guest.getUuid());
         entity.setCpf(guest.getCpf());

@@ -2,7 +2,9 @@ package tech.leonam.hotelcalifornia.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import tech.leonam.hotelcalifornia.model.dto.GuestRegisterDto;
 import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
+import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
 import tech.leonam.hotelcalifornia.model.entity.GuestEntity;
 import tech.leonam.hotelcalifornia.repository.GuestRespository;
 import tech.leonam.hotelcalifornia.util.Copy;
@@ -20,29 +22,30 @@ public class GuestService {
     }
 
     @Transactional
-    public GuestResponseDto register(GuestEntity guest) {
-        var response = respository.save(guest);
-        return new Copy().EntityToDtoResponse(response);
+    public GuestResponseDto register(GuestRegisterDto guest) {
+        var entity = Copy.RegisterDtoToEntity(guest);
+        var response = respository.save(entity);
+        return Copy.EntityToDtoResponse(response);
     }
 
     @Transactional
     public void delete(UUID uuid) throws NotFoundException {
-        if (!existsById(uuid)) {
-            throw new NotFoundException("This id was not found.");
-        }
+        verifyIfNotExists(uuid);
         respository.deleteById(uuid);
     }
 
     @Transactional
-    public GuestResponseDto modify(GuestEntity guest) throws NotFoundException {
-        if (!existsById(guest.getId())) {
+    public GuestResponseDto modify(GuestUpdateDto guest) throws NotFoundException {
+        verifyIfNotExists(guest.getUuid());
+        var entity = Copy.UpdateDtoToEntity(guest);
+        var entitySaved = respository.save(entity);
+        return Copy.EntityToDtoResponse(entitySaved);
+    }
+    private void verifyIfNotExists(UUID uuid) throws NotFoundException {
+        if (!existsById(uuid)) {
             throw new NotFoundException("This id was not found.");
         }
-
-        var entitySaved = respository.save(guest);
-        return new Copy().EntityToDtoResponse(entitySaved);
     }
-
     public List<GuestEntity> getAll() {
         return respository.findAll();
     }

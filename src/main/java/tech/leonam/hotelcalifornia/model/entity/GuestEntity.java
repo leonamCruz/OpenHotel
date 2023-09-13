@@ -1,60 +1,24 @@
 package tech.leonam.hotelcalifornia.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 public class GuestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column
+    @Column(name = "name")
     private String name;
-    @Column
+    @Column(name = "cpf")
     private String cpf;
-    @Column
+    @Column(name = "cellphone")
     private String cellPhone;
-    @Column
+    @Column(name = "dateofbirth")
     private String dateOfBirth;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String nome) {
-        this.name = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getCellPhone() {
-        return cellPhone;
-    }
-
-    public void setCellPhone(String telefone) {
-        this.cellPhone = telefone;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dataDeNascimento) {
-        this.dateOfBirth = dataDeNascimento;
-    }
 }

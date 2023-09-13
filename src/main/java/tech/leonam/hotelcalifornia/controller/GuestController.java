@@ -8,15 +8,15 @@ import tech.leonam.hotelcalifornia.model.dto.GuestRegisterDto;
 import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
 import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
 import tech.leonam.hotelcalifornia.service.GuestService;
-import tech.leonam.hotelcalifornia.util.Copy;
 import tech.leonam.hotelcalifornia.util.CpfFormat;
+import tech.leonam.hotelcalifornia.util.exception.DocumentException;
 import tech.leonam.hotelcalifornia.util.exception.NotFoundException;
 
 import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 30)
-@RequestMapping("/guest")
+@RequestMapping("/guests")
 public class GuestController {
     private final GuestService service;
 
@@ -26,17 +26,14 @@ public class GuestController {
 
     @PostMapping
     public ResponseEntity<GuestResponseDto> registerGuest(@RequestBody @Valid GuestRegisterDto guest){
-        var entity = new Copy().RegisterDtoToEntity(guest);
-        var entitySaved = service.register(entity);
+        var entitySaved = service.register(guest);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getUuid()).toUri();
         return ResponseEntity.created(uri).body(entitySaved);
     }
     @PutMapping
     public ResponseEntity<Object> modifyGuest(@RequestBody @Valid GuestUpdateDto guest) throws NotFoundException {
-        var entity = new Copy().UpdateDtoToEntity(guest);
-        var entityUpdated = service.modify(entity);
-        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entityUpdated.getUuid()).toUri();
-        return ResponseEntity.created(uri).body(entityUpdated);
+        var entityUpdated = service.modify(guest);
+        return ResponseEntity.ok().body(entityUpdated);
     }
     @DeleteMapping("{uuid}")
     public void deleteGuest(@PathVariable UUID uuid) throws NotFoundException {
@@ -51,7 +48,7 @@ public class GuestController {
         return ResponseEntity.ok().body(service.getByName(name));
     }
     @GetMapping("/document/{cpf}")
-    public ResponseEntity<Object> getByDocument(@PathVariable String cpf){
+    public ResponseEntity<Object> getByDocument(@PathVariable String cpf) throws DocumentException {
         return ResponseEntity.ok().body(service.getByDocument(CpfFormat.format(cpf)));
     }
     @GetMapping("/cellphone/{cellPhone}")

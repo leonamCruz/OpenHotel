@@ -7,7 +7,7 @@ import tech.leonam.hotelcalifornia.service.CheckInService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 30)
-@RequestMapping("/check")
+@RequestMapping("/check-ins")
 public class CheckInController {
     private final CheckInService service;
     public CheckInController(CheckInService service) {

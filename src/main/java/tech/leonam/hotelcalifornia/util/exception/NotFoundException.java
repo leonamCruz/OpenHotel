@@ -1,6 +1,9 @@
 package tech.leonam.hotelcalifornia.util.exception;
 
-public class NotFoundException extends Exception{
+import java.io.Serializable;
+
+public class NotFoundException extends Exception implements Serializable {
+
     public NotFoundException(String message) {
         super(message);
     }
