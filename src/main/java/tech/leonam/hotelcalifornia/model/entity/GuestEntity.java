@@ -12,6 +12,7 @@ import java.util.UUID;
 public class GuestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column
     private UUID id;
     @Column(name = "name")
     private String name;

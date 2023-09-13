@@ -1,9 +1,12 @@
 package tech.leonam.hotelcalifornia.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
-
+@Getter
+@Setter
 @Entity
 public class CheckInEntity {
     @Id
@@ -12,50 +15,10 @@ public class CheckInEntity {
     @ManyToOne
     @JoinColumn(name = "guest_id")
     public GuestEntity guest;
-    @Column
+    @Column(name = "moment_entry")
     public String momentEntry;
-    @Column
+    @Column(name = "moment_exit")
     public String momentExit;
-    @Column
+    @Column(name = "additional_car")
     public boolean additionalCar;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public GuestEntity getGuest() {
-        return guest;
-    }
-
-    public void setGuest(GuestEntity guest) {
-        this.guest = guest;
-    }
-
-    public String getMomentEntry() {
-        return momentEntry;
-    }
-
-    public void setMomentEntry(String momentEntry) {
-        this.momentEntry = momentEntry;
-    }
-
-    public String getMomentExit() {
-        return momentExit;
-    }
-
-    public void setMomentExit(String momentExit) {
-        this.momentExit = momentExit;
-    }
-
-    public boolean isAdditionalCar() {
-        return additionalCar;
-    }
-
-    public void setAdditionalCar(boolean additionalCar) {
-        this.additionalCar = additionalCar;
-    }
 }
