@@ -2,9 +2,9 @@ package tech.leonam.hotelcalifornia.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import tech.leonam.hotelcalifornia.model.dto.GuestRegisterDto;
-import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
-import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
+import tech.leonam.hotelcalifornia.model.dto.guest.GuestRegisterDto;
+import tech.leonam.hotelcalifornia.model.dto.guest.GuestResponseDto;
+import tech.leonam.hotelcalifornia.model.dto.guest.GuestUpdateDto;
 import tech.leonam.hotelcalifornia.repository.GuestRespository;
 import tech.leonam.hotelcalifornia.util.Copy;
 import tech.leonam.hotelcalifornia.util.exception.NotFoundException;

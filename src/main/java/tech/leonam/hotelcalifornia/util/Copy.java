@@ -1,8 +1,8 @@
 package tech.leonam.hotelcalifornia.util;
 
-import tech.leonam.hotelcalifornia.model.dto.GuestRegisterDto;
-import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
-import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
+import tech.leonam.hotelcalifornia.model.dto.guest.GuestRegisterDto;
+import tech.leonam.hotelcalifornia.model.dto.guest.GuestResponseDto;
+import tech.leonam.hotelcalifornia.model.dto.guest.GuestUpdateDto;
 import tech.leonam.hotelcalifornia.model.entity.GuestEntity;
 
 import java.util.ArrayList;
