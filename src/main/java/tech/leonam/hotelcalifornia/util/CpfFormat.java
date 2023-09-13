@@ -12,12 +12,12 @@ public class CpfFormat {
         isBlank(cpf);
         isTheSizeCorrect(cpf);
     }
-    private static void isBlank(String cpf) throws DocumentException {
+    protected static void isBlank(String cpf) throws DocumentException {
         if (cpf.isBlank()){
             throw new DocumentException("CPF blank");
         }
     }
-    private static void isTheSizeCorrect(String cpf) throws DocumentException {
+    protected static void isTheSizeCorrect(String cpf) throws DocumentException {
         if(cpf.length() != SIZE_CPF){
             throw new DocumentException("CPF with incorrect size.");
         }

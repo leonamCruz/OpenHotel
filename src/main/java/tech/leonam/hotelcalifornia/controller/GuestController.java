@@ -1,6 +1,7 @@
 package tech.leonam.hotelcalifornia.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,13 +19,9 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 30)
 @RequestMapping("/guests")
+@RequiredArgsConstructor
 public class GuestController {
     private final GuestService service;
-
-    public GuestController(GuestService service) {
-        this.service = service;
-    }
-
     @PostMapping
     public ResponseEntity<GuestResponseDto> registerGuest(@RequestBody @Valid GuestRegisterDto guest){
         var entitySaved = service.register(guest);
