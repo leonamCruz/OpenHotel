@@ -26,4 +26,38 @@ public class GuestResponseDto {
     @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$", message = "Date of Birth: Invalid")
     private String dateOfBirth;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GuestResponseDto that = (GuestResponseDto) o;
+
+        if (!uuid.equals(that.uuid)) return false;
+        if (!name.equals(that.name)) return false;
+        if (!cpf.equals(that.cpf)) return false;
+        if (!cellPhone.equals(that.cellPhone)) return false;
+        return dateOfBirth.equals(that.dateOfBirth);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = uuid.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + cpf.hashCode();
+        result = 31 * result + cellPhone.hashCode();
+        result = 31 * result + dateOfBirth.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "GuestResponseDto{" +
+                "uuid=" + uuid +
+                ", name='" + name + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                '}';
+    }
 }

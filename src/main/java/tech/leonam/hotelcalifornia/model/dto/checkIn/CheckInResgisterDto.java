@@ -39,4 +39,5 @@ public class CheckInResgisterDto {
         verifyHour();
         this.momentExit = momentExit;
     }
+
 }

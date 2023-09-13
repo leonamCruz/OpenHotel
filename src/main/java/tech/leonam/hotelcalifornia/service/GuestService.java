@@ -1,6 +1,7 @@
 package tech.leonam.hotelcalifornia.service;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.leonam.hotelcalifornia.model.dto.guest.GuestRegisterDto;
 import tech.leonam.hotelcalifornia.model.dto.guest.GuestResponseDto;
@@ -13,13 +14,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class GuestService {
     private final GuestRespository respository;
-
-    public GuestService(GuestRespository respository) {
-        this.respository = respository;
-    }
-
     @Transactional
     public GuestResponseDto register(GuestRegisterDto guest) {
         var entity = Copy.RegisterDtoToEntity(guest);
