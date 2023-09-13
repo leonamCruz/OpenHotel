@@ -12,6 +12,7 @@ import tech.leonam.hotelcalifornia.util.CpfFormat;
 import tech.leonam.hotelcalifornia.util.exception.DocumentException;
 import tech.leonam.hotelcalifornia.util.exception.NotFoundException;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,28 +32,27 @@ public class GuestController {
         return ResponseEntity.created(uri).body(entitySaved);
     }
     @PutMapping
-    public ResponseEntity<Object> modifyGuest(@RequestBody @Valid GuestUpdateDto guest) throws NotFoundException {
-        var entityUpdated = service.modify(guest);
-        return ResponseEntity.ok().body(entityUpdated);
+    public ResponseEntity<GuestResponseDto> modifyGuest(@RequestBody @Valid GuestUpdateDto guest) throws NotFoundException {
+        return ResponseEntity.ok().body(service.modify(guest));
     }
     @DeleteMapping("{uuid}")
     public void deleteGuest(@PathVariable UUID uuid) throws NotFoundException {
         service.delete(uuid);
     }
     @GetMapping("/all")
-    public ResponseEntity<Object> getAllGuests(){
+    public ResponseEntity<List<GuestResponseDto>> getAllGuests(){
         return ResponseEntity.ok().body(service.getAll());
     }
     @GetMapping("/name/{name}")
-    public ResponseEntity<Object> getByName(@PathVariable String name){
+    public ResponseEntity<List<GuestResponseDto>> getByName(@PathVariable String name){
         return ResponseEntity.ok().body(service.getByName(name));
     }
     @GetMapping("/document/{cpf}")
-    public ResponseEntity<Object> getByDocument(@PathVariable String cpf) throws DocumentException {
+    public ResponseEntity<GuestResponseDto> getByDocument(@PathVariable String cpf) throws DocumentException {
         return ResponseEntity.ok().body(service.getByDocument(CpfFormat.format(cpf)));
     }
     @GetMapping("/cellphone/{cellPhone}")
-    public ResponseEntity<Object> getByCellPhone(@PathVariable String cellPhone){
+    public ResponseEntity<GuestResponseDto> getByCellPhone(@PathVariable String cellPhone){
         return ResponseEntity.ok().body(service.getByCellPhone(cellPhone));
     }
 }

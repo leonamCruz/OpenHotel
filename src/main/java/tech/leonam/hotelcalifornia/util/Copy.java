@@ -5,6 +5,9 @@ import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
 import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
 import tech.leonam.hotelcalifornia.model.entity.GuestEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Copy {
     public static GuestEntity RegisterDtoToEntity(GuestRegisterDto dto){
         var entity = new GuestEntity();
@@ -33,5 +36,13 @@ public class Copy {
         entity.setCellPhone(guest.getCellPhone());
         entity.setDateOfBirth(guest.getDateOfBirth());
         return entity;
+    }
+    public static List<GuestResponseDto> convertListEntityToListResponseDto(List<GuestEntity> list) {
+        var listResponse = new ArrayList<GuestResponseDto>();
+
+        for (var thisTime : list) {
+            listResponse.add(Copy.EntityToDtoResponse(thisTime));
+        }
+        return listResponse;
     }
 }

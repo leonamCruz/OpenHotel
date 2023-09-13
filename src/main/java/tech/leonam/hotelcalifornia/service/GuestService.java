@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import tech.leonam.hotelcalifornia.model.dto.GuestRegisterDto;
 import tech.leonam.hotelcalifornia.model.dto.GuestResponseDto;
 import tech.leonam.hotelcalifornia.model.dto.GuestUpdateDto;
-import tech.leonam.hotelcalifornia.model.entity.GuestEntity;
 import tech.leonam.hotelcalifornia.repository.GuestRespository;
 import tech.leonam.hotelcalifornia.util.Copy;
 import tech.leonam.hotelcalifornia.util.exception.NotFoundException;
@@ -41,25 +40,27 @@ public class GuestService {
         var entitySaved = respository.save(entity);
         return Copy.EntityToDtoResponse(entitySaved);
     }
+
     private void verifyIfNotExists(UUID uuid) throws NotFoundException {
         if (!existsById(uuid)) {
             throw new NotFoundException("This id was not found.");
         }
     }
-    public List<GuestEntity> getAll() {
-        return respository.findAll();
+
+    public List<GuestResponseDto> getAll() {
+        return Copy.convertListEntityToListResponseDto(respository.findAll());
     }
 
-    public List<GuestEntity> getByName(String name) {
-        return respository.findByName(name);
+    public List<GuestResponseDto> getByName(String name) {
+        return Copy.convertListEntityToListResponseDto(respository.findByName(name));
     }
 
-    public List<GuestEntity> getByDocument(String cpf) {
-        return respository.findByDocument(cpf);
+    public GuestResponseDto getByDocument(String cpf) {
+        return Copy.EntityToDtoResponse(respository.findByDocument(cpf));
     }
 
-    public List<GuestEntity> getByCellPhone(String cellPhone) {
-        return respository.findByCellPhone(cellPhone);
+    public GuestResponseDto getByCellPhone(String cellPhone) {
+        return Copy.EntityToDtoResponse(respository.findByCellPhone(cellPhone));
     }
 
     private boolean existsById(UUID uuid) {

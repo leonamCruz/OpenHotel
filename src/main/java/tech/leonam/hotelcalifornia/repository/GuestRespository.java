@@ -14,9 +14,9 @@
         List<GuestEntity> findByName(@Param("name") String name);
 
         @Query("SELECT g FROM GuestEntity g WHERE g.cpf = :cpf")
-        List<GuestEntity> findByDocument(@Param("cpf") String cpf);
+        GuestEntity findByDocument(@Param("cpf") String cpf);
 
         @Query("SELECT g FROM GuestEntity g WHERE g.cellPhone = :cellPhone")
-        List<GuestEntity> findByCellPhone(@Param("cellPhone") String cellPhone);
+        GuestEntity findByCellPhone(@Param("cellPhone") String cellPhone);
 
     }
